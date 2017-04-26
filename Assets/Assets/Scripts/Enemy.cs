@@ -9,8 +9,8 @@ public abstract class Enemy : MonoBehaviour {
 	public AudioClip wrongActionAudio;
 	public AudioSource audioSource;
 
-	public EnemyManager enemyManager;
-	public PlayerHealth playerHealth;
+	protected EnemyManager enemyManager;
+	protected PlayerHealth playerHealth;
 
 	Vector3 velocity = Vector3.zero;
 	public float smoothTime = 10F;
@@ -21,7 +21,9 @@ public abstract class Enemy : MonoBehaviour {
 	float maxSpeed = 5f;
 
 	protected MeshRenderer[] renderer;
+	protected SkinnedMeshRenderer skinnedRenderer;
 	protected ParticleSystem deadEffect;
+	protected Animator animator;
 
 
     void Start () {
@@ -35,7 +37,9 @@ public abstract class Enemy : MonoBehaviour {
 		enemey = GetComponent<Rigidbody> ();
 		audioSource = GetComponent<AudioSource> ();
 		renderer = GetComponentsInChildren<MeshRenderer> ();
+		skinnedRenderer = GetComponentInChildren<SkinnedMeshRenderer> ();
 		deadEffect = GetComponentInChildren<ParticleSystem> ();
+		animator = GetComponentInChildren<Animator> ();
 	}
 	
 	// Update is called once per frame

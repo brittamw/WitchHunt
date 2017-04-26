@@ -2,18 +2,19 @@
 using System.Collections;
 
 public class Raven : Enemy {
-    Animator animator;
+
+	public Material deadMaterial;
+
 	public override void DoAction(bool rightAction) {
 		if (rightAction) {
-            //animator = GetComponent<Animator>();
 			alive = false;            
-            //animator.SetTrigger("freuen");
+			animator.speed = 0;
+			skinnedRenderer.material = deadMaterial;
 			audioSource.clip = rightActionAudio;
-			foreach (MeshRenderer r in renderer) {
-				r.enabled = false;
-			}
+			enemey.useGravity = true;
+			enemey.constraints = RigidbodyConstraints.None;
 			deadEffect.Emit(1);
-			Destroy (gameObject,3f);
+			//Destroy (gameObject,3f);
 		} else {
 			if (audioSource != null) {
 				audioSource.clip = wrongActionAudio;
@@ -25,11 +26,13 @@ public class Raven : Enemy {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		if (alive) {
 		base.OnTriggerEnter (other);
-		if (other.CompareTag ("BulletForRaven")) {
-			DoAction (true);
-		} else if (other.CompareTag ("BulletForWitch")) {
-			DoAction (false);
+			if (other.CompareTag ("BulletForRaven")) {
+				DoAction (true);
+			} else if (other.CompareTag ("BulletForWitch")) {
+				DoAction (false);
+			}
 		}
 	}
 }

@@ -21,11 +21,13 @@ public class Witch : Enemy {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		base.OnTriggerEnter (other);
-		if (other.CompareTag ("BulletForRaven")) {
-			
-		} else if (other.CompareTag ("BulletForWitch")) {
-			DoAction (true);
+		if (alive) {
+			base.OnTriggerEnter (other);
+			if (other.CompareTag ("BulletForRaven")) {
+				DoAction (false);
+			} else if (other.CompareTag ("BulletForWitch")) {
+				DoAction (true);
+			}
 		}
 	}
 }

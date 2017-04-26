@@ -33,14 +33,6 @@ public class GameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (gotoStart) {
-
-
-				gotoStart = false;
-				enemyManager.startGame ();
-				startTimer ();
-
-		}
 		if (timerStarted == true) {
 			timer += Time.deltaTime;
 			string minutes = (string) Mathf.Floor(timer / 60).ToString("00");
@@ -49,12 +41,15 @@ public class GameManager : MonoBehaviour {
 		}     
 	}
 
-	public void goToStart() {
-		gotoStart = true;
-		gameStarted = true;
-		startGameText.enabled = false;
-		titleText.enabled = false;
-		healthPointText.enabled = true;
+	public void startGame() {
+		if (!gameStarted) {
+			gameStarted = true;
+			startGameText.enabled = false;
+			titleText.enabled = false;
+			healthPointText.enabled = true;
+			enemyManager.startGame ();
+			startTimer ();
+		}
 	}
 
 	void startTimer() {
