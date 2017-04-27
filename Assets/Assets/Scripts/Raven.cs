@@ -8,6 +8,7 @@ public class Raven : Enemy {
 	protected void Start() {
 		base.Start ();
 		maxSpeed = 6f;
+		currentTarget = playerTarget;
 	}
 
 	public override void DoAction(bool rightAction) {
@@ -21,7 +22,7 @@ public class Raven : Enemy {
 			enemey.useGravity = true;
 			enemey.constraints = RigidbodyConstraints.None;
 			deadEffect.Emit(1);
-			//Destroy (gameObject,3f);
+			Destroy (gameObject,3f);
 		} else {
 			if (audioSource != null) {
 				audioSource.clip = wrongActionAudio;
@@ -36,8 +37,8 @@ public class Raven : Enemy {
 		if (alive) {
 		//base.OnTriggerEnter (other);
 			if (other.CompareTag ("PlayerTarget")) {
+				playerHealth.TakeDamage (1);
 				Destroy (gameObject);
-				// TODO: Leben abziehen
 			} else if (other.CompareTag ("BulletForRaven")) {
 				DoAction (true);
 			} else if (other.CompareTag ("BulletForWitch")) {

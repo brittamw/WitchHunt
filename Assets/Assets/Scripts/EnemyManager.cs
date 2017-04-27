@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour {
 
 	public GameManager gameManager;
 	public PlayerHealth playerHealth;
+	public MountainHealth mountainHealth;
 
 	float currentNavSpeed;
 	public int spawnTimeWitchDistance = 250;
@@ -56,7 +57,7 @@ public class EnemyManager : MonoBehaviour {
 			}
 			timeBetweenRavenSpawning--;
 			if (witchLight.intensity > 0) {
-				witchLight.intensity = witchLight.intensity - 2f;
+				witchLight.intensity = witchLight.intensity - 1f;
 			}
 		}
 	}
@@ -74,11 +75,13 @@ public class EnemyManager : MonoBehaviour {
 			spawnPoint = spawnPointWitch2.transform;
 		}
 			
-		witchLight.intensity = 15f;
+		witchLight.intensity = 25f;
 
 		float randomForType = Random.value*2f;
 		Enemy newEnemyObject = (Enemy) Instantiate (witch, spawnPoint.position, spawnPoint.rotation);
 		newEnemyObject.enabled = true;
+
+		newEnemyObject.audioSource.Play ();
 
 		allEnemies.Add (newEnemyObject);
 	}
@@ -93,13 +96,15 @@ public class EnemyManager : MonoBehaviour {
 		}
 
 		Enemy newEnemyObject = (Enemy) Instantiate (raven, spawnPoint.position, spawnPoint.rotation);
-
 		newEnemyObject.enabled = true;
+
+		newEnemyObject.audioSource.Play ();
+
 		allEnemies.Add (newEnemyObject);
 	}
 
 	public void enemyTooNear(Enemy enemy) {
-		playerHealth.TakeDamage (1);
+		mountainHealth.TakeDamage (1);
 		//Destroy (enemy.gameObject);
 	}
 

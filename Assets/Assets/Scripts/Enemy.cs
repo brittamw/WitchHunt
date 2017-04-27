@@ -11,6 +11,7 @@ public abstract class Enemy : MonoBehaviour {
 
 	protected EnemyManager enemyManager;
 	protected PlayerHealth playerHealth;
+	protected MountainHealth mountainHealth;
 
 	Vector3 velocity = Vector3.zero;
 	public float smoothTime = 10F;
@@ -31,7 +32,6 @@ public abstract class Enemy : MonoBehaviour {
 		playerTarget = GameObject.FindGameObjectWithTag ("PlayerTarget");
 		mountainTopTarget = GameObject.FindGameObjectWithTag ("MountainTopTarget");
 		mountainBottomTarget = GameObject.FindGameObjectWithTag ("MountainBottomTarget");
-		currentTarget = playerTarget;
 		alive = true;
 		enemey = GetComponent<Rigidbody> ();
 		audioSource = GetComponent<AudioSource> ();

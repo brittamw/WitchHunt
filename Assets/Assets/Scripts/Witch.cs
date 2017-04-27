@@ -6,6 +6,7 @@ public class Witch : Enemy {
 	protected void Start() {
 		base.Start ();
 		maxSpeed = 3f;
+		currentTarget = mountainBottomTarget;
 	}
 
 	public override void DoAction(bool rightAction) {

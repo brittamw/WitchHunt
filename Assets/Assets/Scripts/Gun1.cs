@@ -12,7 +12,7 @@
         //public bool bulletThree = false;
 
         public float bulletSpeed = 1000f;
-        private float bulletLife = 5f;
+        public float bulletLife = 2f;
 
 
         private ParticleSystem particles1;
@@ -30,14 +30,14 @@
         public override void StartUsing(GameObject usingObject)
         {
             base.StartUsing(usingObject);
-            FireBullet();
+			FireBullet(usingObject);
         }
 
         public void ToggleBullet()
         {
 			witch = !witch;
 			Material currentMaterial;
-			if (witch == true) {
+			if (witch == false) {
 				currentMaterial = witchMaterial;
 			} else {
 				currentMaterial = ravenMaterial;
@@ -64,45 +64,51 @@
             //  bullet3.SetActive(false);
 
             particles1 = bullet1.GetComponent<ParticleSystem>();
-            particles1.Stop();
+            //particles1.Stop();
             particles2 = bullet2.GetComponent<ParticleSystem>();
-            particles2.Stop();
+			particles1.Play();
+			particles2.Play();
+           // particles2.Stop();
             //  particles3 = bullet3.GetComponent<ParticleSystem>();
             // particles3.Stop();
         }
 
-        private void FireBullet()
+		private void FireBullet(GameObject usingObject)
         {
             if (witch == true)
             {
                 GameObject bulletClone = Instantiate(bullet1, bullet1.transform.position, bullet1.transform.rotation) as GameObject;
                 bulletClone.SetActive(true);
-                if (particles1.isPaused || particles1.isStopped)
+				//particles1.Play();
+                /*if (particles1.isPaused || particles1.isStopped)
                 {
-                    particles1.Play();
-                }
+                    
+                }*/
                 Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
                 rb.AddForce(-bullet1.transform.forward * bulletSpeed);
 
-
                 Destroy(bulletClone, bulletLife);
-                particles1.Stop();
+                //particles1.Stop();
             }
 			else if (witch == false)
             {
                 GameObject bulletClone = Instantiate(bullet2, bullet2.transform.position, bullet2.transform.rotation) as GameObject;
                 bulletClone.SetActive(true);
+				//particles2.Play();
                 if (particles2.isPaused || particles2.isStopped)
                 {
-                    particles2.Play();
+                    
                 }
                 Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
                 rb.AddForce(-bullet2.transform.forward * bulletSpeed);
 
-
                 Destroy(bulletClone, bulletLife);
-                particles2.Stop();
-            }/*
+                //particles2.Stop();
+            }
+
+			StopUsing (usingObject);
+
+			/*
             else if (bulletThree == true)
             {
                 GameObject bulletClone = Instantiate(bullet3, bullet3.transform.position, bullet3.transform.rotation) as GameObject;
