@@ -14,19 +14,18 @@ public abstract class Enemy : MonoBehaviour {
 
 	Vector3 velocity = Vector3.zero;
 	public float smoothTime = 10F;
-	GameObject playerTarget;
-	GameObject mountainTopTarget;
-	GameObject mountainBottomTarget;
-	GameObject currentTarget;
-	float maxSpeed = 5f;
+	protected GameObject playerTarget;
+	protected GameObject mountainTopTarget;
+	protected GameObject mountainBottomTarget;
+	protected GameObject currentTarget;
+	public float maxSpeed;
 
 	protected MeshRenderer[] renderer;
-	protected SkinnedMeshRenderer skinnedRenderer;
+	protected SkinnedMeshRenderer[] skinnedRenderer;
 	protected ParticleSystem deadEffect;
 	protected Animator animator;
 
-
-    void Start () {
+	protected virtual void Start () {
 		enemyManager = GameObject.FindGameObjectWithTag ("EnemyManager").gameObject.GetComponent<EnemyManager> ();
 		playerHealth = GameObject.FindGameObjectWithTag ("PlayerHealth").gameObject.GetComponent<PlayerHealth> ();
 		playerTarget = GameObject.FindGameObjectWithTag ("PlayerTarget");
@@ -37,7 +36,7 @@ public abstract class Enemy : MonoBehaviour {
 		enemey = GetComponent<Rigidbody> ();
 		audioSource = GetComponent<AudioSource> ();
 		renderer = GetComponentsInChildren<MeshRenderer> ();
-		skinnedRenderer = GetComponentInChildren<SkinnedMeshRenderer> ();
+		skinnedRenderer = GetComponentsInChildren<SkinnedMeshRenderer> ();
 		deadEffect = GetComponentInChildren<ParticleSystem> ();
 		animator = GetComponentInChildren<Animator> ();
 	}
@@ -59,12 +58,12 @@ public abstract class Enemy : MonoBehaviour {
 	public abstract void DoAction (bool rightAction);
 
 	protected virtual void OnTriggerEnter(Collider other) {
-		if (other.CompareTag ("PlayerTarget")) {
+		/*if (other.CompareTag ("PlayerTarget")) {
 			currentTarget = mountainBottomTarget;
 		} else if (other.CompareTag ("MountainBottomTarget")) {
 			currentTarget = mountainTopTarget;
 		} else if (other.CompareTag ("MountainTopTarget")) {
 			enemyManager.enemyTooNear (this);
-		} 
+		} */
 	}
 }

@@ -8,7 +8,8 @@ public class EnemyManager : MonoBehaviour {
 
 	ArrayList allEnemies;
     
-	public float timeBetweenEnemySpawning;
+	public float timeBetweenWitchSpawning;
+	public float timeBetweenRavenSpawning;
 
 	bool gameRunning;
 	bool firstStart;
@@ -17,11 +18,16 @@ public class EnemyManager : MonoBehaviour {
 	public PlayerHealth playerHealth;
 
 	float currentNavSpeed;
-	int spawnTime;
+	public int spawnTimeWitchDistance = 250;
+	public int spawnTimeRavenDistance = 250;
 	int gameLevel;
 
-	public GameObject spawnPoint1;
-	public GameObject spawnPoint2;
+	public GameObject spawnPointWitch1;
+	public GameObject spawnPointWitch2;
+	public GameObject spawnPointRaven1;
+	public GameObject spawnPointRaven2;
+
+	public Light witchLight;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +35,6 @@ public class EnemyManager : MonoBehaviour {
 		firstStart = true;
 		allEnemies = new ArrayList ();
 		currentNavSpeed = 3.5f;
-		spawnTime = 250;
 		gameLevel = 1;       
 	}
 
@@ -40,11 +45,19 @@ public class EnemyManager : MonoBehaviour {
 				InvokeRepeating ("makeGameHarder", 5f, 5f);
 				firstStart = false;
 			}
-			if (timeBetweenEnemySpawning == 0) {
-				Invoke ("createEnemy", 0f);
-				timeBetweenEnemySpawning = spawnTime;
+			if (timeBetweenWitchSpawning == 0) {
+				Invoke ("createWitch", 0f);
+				timeBetweenWitchSpawning = spawnTimeWitchDistance;
 			}
-			timeBetweenEnemySpawning--;
+			timeBetweenWitchSpawning--;
+			if (timeBetweenRavenSpawning == 0) {
+				Invoke ("createRaven", 0f);
+				timeBetweenRavenSpawning = spawnTimeRavenDistance;
+			}
+			timeBetweenRavenSpawning--;
+			if (witchLight.intensity > 0) {
+				witchLight.intensity = witchLight.intensity - 2f;
+			}
 		}
 	}
 
@@ -52,22 +65,35 @@ public class EnemyManager : MonoBehaviour {
 		enemy.DoAction (rightAction);
 	}
 
-	void createEnemy() {
+	void createWitch() {
 		Transform spawnPoint;
 		float randomForPosition = Random.value*2f;
 		if (Mathf.Floor (randomForPosition) == 0) {
-			spawnPoint = spawnPoint1.transform;
+			spawnPoint = spawnPointWitch1.transform;
 		} else {
-			spawnPoint = spawnPoint2.transform;
+			spawnPoint = spawnPointWitch2.transform;
 		}
+			
+		witchLight.intensity = 15f;
 
 		float randomForType = Random.value*2f;
-		Enemy newEnemyObject;
-		if (Mathf.Floor(randomForType) == 0) {
-			newEnemyObject = (Enemy) Instantiate (raven, spawnPoint.position, spawnPoint.rotation);
+		Enemy newEnemyObject = (Enemy) Instantiate (witch, spawnPoint.position, spawnPoint.rotation);
+		newEnemyObject.enabled = true;
+
+		allEnemies.Add (newEnemyObject);
+	}
+
+	void createRaven() {
+		Transform spawnPoint;
+		float randomForPosition = Random.value*2f;
+		if (Mathf.Floor (randomForPosition) == 0) {
+			spawnPoint = spawnPointRaven1.transform;
 		} else {
-			newEnemyObject = (Enemy) Instantiate (witch, spawnPoint.position, spawnPoint.rotation);
+			spawnPoint = spawnPointRaven2.transform;
 		}
+
+		Enemy newEnemyObject = (Enemy) Instantiate (raven, spawnPoint.position, spawnPoint.rotation);
+
 		newEnemyObject.enabled = true;
 		allEnemies.Add (newEnemyObject);
 	}
@@ -83,13 +109,13 @@ public class EnemyManager : MonoBehaviour {
 
 	public void makeGameHarder() {
 		gameLevel++;
-		spawnTime = spawnTime - (75/gameLevel);
+		/*spawnTime = spawnTime - (75/gameLevel);
 		if (spawnTime < 30) {
 			spawnTime = 30;
-		}
+		}*/
 
-		currentNavSpeed = currentNavSpeed + (2f/gameLevel);
-		Debug.Log ("Game is now at level: " + gameLevel + " speed=" + currentNavSpeed + " spawntime: " + spawnTime);
+		//currentNavSpeed = currentNavSpeed + (2f/gameLevel);
+		//Debug.Log ("Game is now at level: " + gameLevel + " speed=" + currentNavSpeed + " spawntime: " + spawnTime);
 	}
 
 	public void startGame() {

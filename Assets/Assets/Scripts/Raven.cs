@@ -5,11 +5,18 @@ public class Raven : Enemy {
 
 	public Material deadMaterial;
 
+	protected void Start() {
+		base.Start ();
+		maxSpeed = 6f;
+	}
+
 	public override void DoAction(bool rightAction) {
 		if (rightAction) {
 			alive = false;            
 			animator.speed = 0;
-			skinnedRenderer.material = deadMaterial;
+			foreach (SkinnedMeshRenderer r in skinnedRenderer) {
+				r.material = deadMaterial;
+			}
 			audioSource.clip = rightActionAudio;
 			enemey.useGravity = true;
 			enemey.constraints = RigidbodyConstraints.None;
@@ -27,8 +34,11 @@ public class Raven : Enemy {
 
 	void OnTriggerEnter(Collider other) {
 		if (alive) {
-		base.OnTriggerEnter (other);
-			if (other.CompareTag ("BulletForRaven")) {
+		//base.OnTriggerEnter (other);
+			if (other.CompareTag ("PlayerTarget")) {
+				Destroy (gameObject);
+				// TODO: Leben abziehen
+			} else if (other.CompareTag ("BulletForRaven")) {
 				DoAction (true);
 			} else if (other.CompareTag ("BulletForWitch")) {
 				DoAction (false);
