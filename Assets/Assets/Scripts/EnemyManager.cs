@@ -37,6 +37,8 @@ public class EnemyManager : MonoBehaviour {
 	public GameObject spawnPointRaven6;
 	public GameObject spawnPointRaven7;
 
+	public GameObject fireworks;
+
 	public Light witchLight;
 
 	// Use this for initialization
@@ -171,10 +173,9 @@ public class EnemyManager : MonoBehaviour {
 				if (e.audioSource != null) {
 					e.audioSource.enabled = false;
 				}
-				e.DoAction (false);
 			}
 		}
-
+		fireworks.SetActive (true);
 		gameManager.gameOver ();
 	}
 }

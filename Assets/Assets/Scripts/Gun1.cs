@@ -14,6 +14,7 @@
         public float bulletSpeed = 1000f;
         public float bulletLife = 2f;
 
+		public MountainHealth mountainHealth;
 
         private ParticleSystem particles1;
         private ParticleSystem particles2;
@@ -75,35 +76,34 @@
 
 		private void FireBullet(GameObject usingObject)
         {
-            if (witch == true)
-            {
-                GameObject bulletClone = Instantiate(bullet1, bullet1.transform.position, bullet1.transform.rotation) as GameObject;
-                bulletClone.SetActive(true);
-				//particles1.Play();
-                /*if (particles1.isPaused || particles1.isStopped)
+			if (mountainHealth.alive) {
+				if (witch == true) {
+					GameObject bulletClone = Instantiate (bullet1, bullet1.transform.position, bullet1.transform.rotation) as GameObject;
+					bulletClone.SetActive (true);
+					//particles1.Play();
+					/*if (particles1.isPaused || particles1.isStopped)
                 {
                     
                 }*/
-                Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
-                rb.AddForce(-bullet1.transform.forward * bulletSpeed);
+					Rigidbody rb = bulletClone.GetComponent<Rigidbody> ();
+					rb.AddForce (-bullet1.transform.forward * bulletSpeed);
 
-                Destroy(bulletClone, bulletLife);
-                //particles1.Stop();
-            }
-			else if (witch == false)
-            {
-                GameObject bulletClone = Instantiate(bullet2, bullet2.transform.position, bullet2.transform.rotation) as GameObject;
-                bulletClone.SetActive(true);
-				//particles2.Play();
+					Destroy (bulletClone, bulletLife);
+					//particles1.Stop();
+				} else if (witch == false) {
+					GameObject bulletClone = Instantiate (bullet2, bullet2.transform.position, bullet2.transform.rotation) as GameObject;
+					bulletClone.SetActive (true);
+					//particles2.Play();
                
-                Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
-                rb.AddForce(-bullet2.transform.forward * bulletSpeed);
+					Rigidbody rb = bulletClone.GetComponent<Rigidbody> ();
+					rb.AddForce (-bullet2.transform.forward * bulletSpeed);
 
-                Destroy(bulletClone, bulletLife);
-                //particles2.Stop();
-            }
+					Destroy (bulletClone, bulletLife);
+					//particles2.Stop();
+				}
 
-			StopUsing (usingObject);
+				StopUsing (usingObject);
+			}
 
 			/*
             else if (bulletThree == true)

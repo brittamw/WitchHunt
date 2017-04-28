@@ -51,7 +51,7 @@ public class Witch : Enemy {
 				currentTarget = mountainTopTarget;
 			} else if (other.CompareTag ("MountainTopTarget")) {
 				enemyManager.enemyTooNear (this);
-				Destroy (gameObject, 2f);
+				Destroy (gameObject);
 			} else if (other.CompareTag ("BulletForRaven")) {
 				DoAction (false);
 			} else if (other.CompareTag ("BulletForWitch")) {

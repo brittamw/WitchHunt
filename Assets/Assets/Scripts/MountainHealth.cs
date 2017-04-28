@@ -4,8 +4,8 @@ using System.Collections;
 
 public class MountainHealth : MonoBehaviour {
 
-    int startingHealth = 5;
-	int deadHealth = 0;
+    int startingHealth = 0;
+	int deadHealth = 3;
     public int currentHealth;
 
 	public Text healthPoints;
@@ -19,8 +19,12 @@ public class MountainHealth : MonoBehaviour {
 	public EnemyManager enemyManager;
 	public Light mountainHealthLight;
 
+	public Light healthLight1;
+	public Light healthLight2;
+	public Light healthLight3;
 
-	bool alive;
+
+	public bool alive;
     bool damaged;
     
     // Use this for initialization
@@ -47,9 +51,19 @@ public class MountainHealth : MonoBehaviour {
     {
 		if (alive) {
 			damaged = true;
-			currentHealth -= amount;
+			currentHealth += amount;
 			mountainHealthLight.intensity = mountainHealthLight.intensity + 5;
-			if(currentHealth <= deadHealth && alive)
+
+			if (currentHealth == 1) {
+				healthLight1.enabled = true;
+			} else if (currentHealth == 2) {
+				healthLight2.enabled = true;
+			} else if (currentHealth == 3) {
+				healthLight3.enabled = true;
+				//TODO add Firework
+			}
+
+			if(currentHealth >= deadHealth && alive)
 			{
 				Die();
 			}
