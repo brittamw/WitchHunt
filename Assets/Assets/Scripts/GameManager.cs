@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 	public UnityEngine.UI.Text gameOverTimeText;
 
 	bool gotoStart;
-	bool gameStarted;
+	public bool gameStarted;
 	bool timerStarted;
 
 	float timer;

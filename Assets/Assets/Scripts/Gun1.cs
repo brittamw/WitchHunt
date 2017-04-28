@@ -8,7 +8,7 @@
         private GameObject bullet2;
         //private GameObject bullet3;
 
-        public bool witch = true;
+        public bool witch;
         //public bool bulletThree = false;
 
         public float bulletSpeed = 1000f;

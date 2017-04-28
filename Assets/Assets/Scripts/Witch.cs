@@ -27,7 +27,7 @@ public class Witch : Enemy {
 				r.enabled = false;
 			}
 			deadEffect.Emit(1);
-			playerHealth.Score (50);
+			playerHealth.Score (1);
 			Destroy (gameObject,3f);
 		} else {
 			audioSource.clip = wrongActionAudio;

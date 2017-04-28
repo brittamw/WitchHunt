@@ -52,7 +52,7 @@ public abstract class Enemy : MonoBehaviour {
 		if (alive) {
 			//transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.LookRotation(currentTarget.transform.position), Time.deltaTime);
 			Vector3 targetDir = currentTarget.transform.position - transform.position;
-			Vector3 newDir = Vector3.RotateTowards (transform.forward, targetDir, 0.5f * Time.deltaTime, 0f);
+			Vector3 newDir = Vector3.RotateTowards (transform.forward, targetDir, 0.8f * Time.deltaTime, 0f);
 			transform.rotation = Quaternion.LookRotation (newDir);
 
 			//transform.LookAt(currentTarget.transform);
