@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public abstract class InputController : MonoBehaviour {
 
@@ -14,15 +15,20 @@ public abstract class InputController : MonoBehaviour {
 		
 	}
 
-	protected virtual void StartGame() {
+	public virtual void StartGame() {
 		gameManager.startGame ();
 	}
 
-	protected virtual void shootRavenBullet() {
+	public virtual void RestartLevel() {
+		Scene scene = SceneManager.GetActiveScene ();
+		SceneManager.LoadScene (scene.name);
+	}
+
+	public virtual void shootRavenBullet() {
 		FireBullet (ravenBullet);
 	}
 
-	protected virtual void shootWitchBullet() {
+	public virtual void shootWitchBullet() {
 		FireBullet (witchBullet);
 	}
 

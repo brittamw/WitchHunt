@@ -95,10 +95,7 @@
                 GameObject bulletClone = Instantiate(bullet2, bullet2.transform.position, bullet2.transform.rotation) as GameObject;
                 bulletClone.SetActive(true);
 				//particles2.Play();
-                if (particles2.isPaused || particles2.isStopped)
-                {
-                    
-                }
+               
                 Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
                 rb.AddForce(-bullet2.transform.forward * bulletSpeed);
 

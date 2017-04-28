@@ -17,6 +17,7 @@ public class MountainHealth : MonoBehaviour {
     public float flashSpeed = 5f;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 	public EnemyManager enemyManager;
+	public Light mountainHealthLight;
 
 
 	bool alive;
@@ -47,6 +48,7 @@ public class MountainHealth : MonoBehaviour {
 		if (alive) {
 			damaged = true;
 			currentHealth -= amount;
+			mountainHealthLight.intensity = mountainHealthLight.intensity + 5;
 			if(currentHealth <= deadHealth && alive)
 			{
 				Die();

@@ -16,6 +16,9 @@ public abstract class Enemy : MonoBehaviour {
 	Vector3 velocity = Vector3.zero;
 	public float smoothTime = 10F;
 	protected GameObject playerTarget;
+	protected GameObject openField1Target;
+	protected GameObject openField2Target;
+	protected GameObject openField3Target;
 	protected GameObject mountainTopTarget;
 	protected GameObject mountainBottomTarget;
 	protected GameObject currentTarget;
@@ -30,6 +33,9 @@ public abstract class Enemy : MonoBehaviour {
 		enemyManager = GameObject.FindGameObjectWithTag ("EnemyManager").gameObject.GetComponent<EnemyManager> ();
 		playerHealth = GameObject.FindGameObjectWithTag ("PlayerHealth").gameObject.GetComponent<PlayerHealth> ();
 		playerTarget = GameObject.FindGameObjectWithTag ("PlayerTarget");
+		openField1Target = GameObject.FindGameObjectWithTag ("OpenField1Target");
+		openField2Target = GameObject.FindGameObjectWithTag ("OpenField2Target");
+		openField3Target = GameObject.FindGameObjectWithTag ("OpenField3Target");
 		mountainTopTarget = GameObject.FindGameObjectWithTag ("MountainTopTarget");
 		mountainBottomTarget = GameObject.FindGameObjectWithTag ("MountainBottomTarget");
 		alive = true;

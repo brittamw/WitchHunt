@@ -4,59 +4,26 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour {
 
-    int startingHealth = 5;
-	int deadHealth = 0;
-    public int currentHealth;
-
-	public Text healthPoints;
-
-
-    // public Slider healtSlider; // falls wir einen EP-Balken haben wollen
+	int startingHealth = 0;
+    public int currentScore;
+	public Text score;
     public AudioClip deathClip;
-    public Image damageImage;
-    public float flashSpeed = 5f;
-    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 	public EnemyManager enemyManager;
-
-
-	bool alive;
-    bool damaged;
     
     // Use this for initialization
 	void Awake () {
-        currentHealth = startingHealth;
-		alive = true;
+		currentScore = startingHealth;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-       // Bei Schaden Bild rot aufleuchten lassen
-		if (healthPoints != null) {
-			healthPoints.text = currentHealth.ToString ();
-		}
-		if (damaged) {
-			//damageImage.color = flashColour;
-		} else {
-			//damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-		}
-		damaged = false;	
+		if (score != null) {
+			score.text = currentScore.ToString ();
+		}	
     }
 
-    public void TakeDamage(int amount)
+    public void Score(int amount)
     {
-		if (alive) {
-			damaged = true;
-			currentHealth -= amount;
-			if(currentHealth <= deadHealth && alive)
-			{
-				Die();
-			}
-		}
-    }
-
-    void Die()
-    {
-		alive = false;
-		enemyManager.endGame ();
+		currentScore += amount;
     }
 }

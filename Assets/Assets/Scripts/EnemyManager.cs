@@ -18,15 +18,24 @@ public class EnemyManager : MonoBehaviour {
 	public PlayerHealth playerHealth;
 	public MountainHealth mountainHealth;
 
-	float currentNavSpeed;
 	public int spawnTimeWitchDistance = 250;
 	public int spawnTimeRavenDistance = 250;
+
 	int gameLevel;
+	public float gameLevelSteps = 30f;
+
+	public int maxLevel;
 
 	public GameObject spawnPointWitch1;
 	public GameObject spawnPointWitch2;
+	public GameObject spawnPointWitch3;
 	public GameObject spawnPointRaven1;
 	public GameObject spawnPointRaven2;
+	public GameObject spawnPointRaven3;
+	public GameObject spawnPointRaven4;
+	public GameObject spawnPointRaven5;
+	public GameObject spawnPointRaven6;
+	public GameObject spawnPointRaven7;
 
 	public Light witchLight;
 
@@ -35,7 +44,6 @@ public class EnemyManager : MonoBehaviour {
 		gameRunning = false;
 		firstStart = true;
 		allEnemies = new ArrayList ();
-		currentNavSpeed = 3.5f;
 		gameLevel = 1;       
 	}
 
@@ -43,7 +51,7 @@ public class EnemyManager : MonoBehaviour {
 	void Update () {
 		if (gameRunning) {
 			if (firstStart) {
-				InvokeRepeating ("makeGameHarder", 5f, 5f);
+				InvokeRepeating ("makeGameHarder", gameLevelSteps, gameLevelSteps);
 				firstStart = false;
 			}
 			if (timeBetweenWitchSpawning == 0) {
@@ -68,9 +76,11 @@ public class EnemyManager : MonoBehaviour {
 
 	void createWitch() {
 		Transform spawnPoint;
-		float randomForPosition = Random.value*2f;
+		float randomForPosition = Random.value*3f;
 		if (Mathf.Floor (randomForPosition) == 0) {
 			spawnPoint = spawnPointWitch1.transform;
+		} else if (Mathf.Floor (randomForPosition) == 1 && gameLevel >= 3) {
+			spawnPoint = spawnPointWitch3.transform;
 		} else {
 			spawnPoint = spawnPointWitch2.transform;
 		}
@@ -83,22 +93,44 @@ public class EnemyManager : MonoBehaviour {
 
 		newEnemyObject.audioSource.Play ();
 
+		if (gameLevel == maxLevel) {
+			newEnemyObject.maxSpeed = 15f;
+		}
+
 		allEnemies.Add (newEnemyObject);
 	}
 
 	void createRaven() {
+		
 		Transform spawnPoint;
-		float randomForPosition = Random.value*2f;
+		float randomForPosition = Random.value*7f;
 		if (Mathf.Floor (randomForPosition) == 0) {
 			spawnPoint = spawnPointRaven1.transform;
-		} else {
+		} else if (Mathf.Floor (randomForPosition) == 1) {
 			spawnPoint = spawnPointRaven2.transform;
+		} else if (Mathf.Floor (randomForPosition) == 2) {
+			spawnPoint = spawnPointRaven3.transform;
+		} else if (Mathf.Floor (randomForPosition) == 3) {
+			spawnPoint = spawnPointRaven4.transform;
+		} else if (Mathf.Floor (randomForPosition) == 4) {
+			spawnPoint = spawnPointRaven5.transform;
+		} else if (Mathf.Floor (randomForPosition) == 5) {
+			spawnPoint = spawnPointRaven6.transform;
+		} else {
+			spawnPoint = spawnPointRaven7.transform;
 		}
+
+		float random = Random.value*20f - 10f;
+
+		spawnPoint.position = new Vector3 (spawnPoint.position.x + random, spawnPoint.position.y + random, spawnPoint.position.z + random);
+		//spawnPoint.position.x = spawnPoint.position.x + random;
+		//spawnPoint.position.y = spawnPoint.position.y + random;
+		//spawnPoint.position.z = spawnPoint.position.z + random;
 
 		Enemy newEnemyObject = (Enemy) Instantiate (raven, spawnPoint.position, spawnPoint.rotation);
 		newEnemyObject.enabled = true;
 
-		newEnemyObject.audioSource.Play ();
+		//newEnemyObject.audioSource.Play ();
 
 		allEnemies.Add (newEnemyObject);
 	}
@@ -108,19 +140,24 @@ public class EnemyManager : MonoBehaviour {
 		//Destroy (enemy.gameObject);
 	}
 
-	public float getCurrentNavSpeed() {
-		return currentNavSpeed;
-	}
-
 	public void makeGameHarder() {
-		gameLevel++;
-		/*spawnTime = spawnTime - (75/gameLevel);
-		if (spawnTime < 30) {
-			spawnTime = 30;
-		}*/
+		if (gameLevel < maxLevel) {
+			gameLevel++;
+			spawnTimeWitchDistance = spawnTimeWitchDistance - 50;
+			if (spawnTimeWitchDistance < 60) {
+				spawnTimeWitchDistance = 60;
+			}
 
-		//currentNavSpeed = currentNavSpeed + (2f/gameLevel);
-		//Debug.Log ("Game is now at level: " + gameLevel + " speed=" + currentNavSpeed + " spawntime: " + spawnTime);
+			spawnTimeRavenDistance = spawnTimeRavenDistance - 30;
+			if (spawnTimeRavenDistance < 25) {
+				spawnTimeRavenDistance = 25;
+			}
+		} else {
+			spawnTimeWitchDistance = 20;
+			spawnTimeRavenDistance = 15;
+		}
+
+		Debug.Log ("Game is now at level: " + gameLevel + " witch=" + spawnTimeWitchDistance + " raven: " + spawnTimeRavenDistance);
 	}
 
 	public void startGame() {

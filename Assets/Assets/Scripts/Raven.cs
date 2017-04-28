@@ -22,7 +22,8 @@ public class Raven : Enemy {
 			enemey.useGravity = true;
 			enemey.constraints = RigidbodyConstraints.None;
 			deadEffect.Emit(1);
-			Destroy (gameObject,3f);
+			playerHealth.Score (10);
+			Destroy (gameObject, 2f);
 		} else {
 			if (audioSource != null) {
 				audioSource.clip = wrongActionAudio;
@@ -37,7 +38,6 @@ public class Raven : Enemy {
 		if (alive) {
 		//base.OnTriggerEnter (other);
 			if (other.CompareTag ("PlayerTarget")) {
-				playerHealth.TakeDamage (1);
 				Destroy (gameObject);
 			} else if (other.CompareTag ("BulletForRaven")) {
 				DoAction (true);
