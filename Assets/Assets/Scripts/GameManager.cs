@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour {
 	public UnityEngine.UI.Text healthPointText;
 	public UnityEngine.UI.Text timeText;
 	public UnityEngine.UI.Text gameOverTimeText;
+	public UnityEngine.UI.Text gameOverPointsText;
+
+	public PlayerHealth playerHealth;
 
 	bool gotoStart;
 	public bool gameStarted;
@@ -29,6 +32,7 @@ public class GameManager : MonoBehaviour {
 		timerStarted = false;
 		timer = 0;
 		gameOverTimeText.enabled = false;
+		gameOverPointsText.enabled = false;
 	}
 
 	// Update is called once per frame
@@ -64,5 +68,7 @@ public class GameManager : MonoBehaviour {
 		gameOverTimeText.text = timeText.text;
 		healthPointText.enabled = false;
 		timeText.enabled = false;
+		gameOverPointsText.enabled = true;
+		gameOverPointsText.text = playerHealth.currentScore + " Punkte";
 	}
 }
