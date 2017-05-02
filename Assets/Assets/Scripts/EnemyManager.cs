@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour {
 	public int spawnTimeWitchDistance = 250;
 	public int spawnTimeRavenDistance = 250;
 
-	int gameLevel;
+	public int gameLevel;
 	public float gameLevelSteps = 30f;
 
 	public int maxLevel;

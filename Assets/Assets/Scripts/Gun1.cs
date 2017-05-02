@@ -26,6 +26,13 @@
 
 		public MeshRenderer renderer;
 
+		public AudioClip witchSound;
+		public AudioClip ravenSound;
+
+		public AudioClip currentSound;
+
+		public AudioSource source;
+
 
 
         public override void StartUsing(GameObject usingObject)
@@ -40,9 +47,12 @@
 			Material currentMaterial;
 			if (witch == false) {
 				currentMaterial = witchMaterial;
+				currentSound = witchSound;
 			} else {
 				currentMaterial = ravenMaterial;
+				currentSound = ravenSound;
 			}
+			source.clip = currentSound;
 			renderer.material = currentMaterial;
 
             // bulletThree = false;
@@ -90,6 +100,7 @@
 
 					Destroy (bulletClone, bulletLife);
 					//particles1.Stop();
+
 				} else if (witch == false) {
 					GameObject bulletClone = Instantiate (bullet2, bullet2.transform.position, bullet2.transform.rotation) as GameObject;
 					bulletClone.SetActive (true);
@@ -101,6 +112,9 @@
 					Destroy (bulletClone, bulletLife);
 					//particles2.Stop();
 				}
+
+				source.Stop();
+				source.Play ();
 
 				StopUsing (usingObject);
 			}

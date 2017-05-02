@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (score != null) {
-			score.text = currentScore.ToString ();
+			score.text = currentScore.ToString () + " Punkte";
 		}	
     }
 

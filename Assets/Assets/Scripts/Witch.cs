@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Witch : Enemy {
 
+	public AudioClip tooNearSound;
+
 	protected void Start() {
 		base.Start ();
+		Cursor.visible = false;
 		maxSpeed = 5f;
 		float random = Random.value*3f;
 		if (Mathf.Floor (random) == 0) {
@@ -13,6 +16,9 @@ public class Witch : Enemy {
 			currentTarget = openField2Target;
 		} else {
 			currentTarget = openField3Target;
+		}
+		if (enemyManager.gameLevel > 20 ) {
+			audioSource.Stop ();
 		}
 	}
 
@@ -51,7 +57,9 @@ public class Witch : Enemy {
 				currentTarget = mountainTopTarget;
 			} else if (other.CompareTag ("MountainTopTarget")) {
 				enemyManager.enemyTooNear (this);
-				Destroy (gameObject);
+				//audioSource.clip = tooNearSound;
+				//audioSource.Play ();
+				Destroy (gameObject, 2f);
 			} else if (other.CompareTag ("BulletForRaven")) {
 				DoAction (false);
 			} else if (other.CompareTag ("BulletForWitch")) {

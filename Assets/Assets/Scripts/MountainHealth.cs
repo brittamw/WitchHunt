@@ -17,11 +17,10 @@ public class MountainHealth : MonoBehaviour {
     public float flashSpeed = 5f;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 	public EnemyManager enemyManager;
-	public Light mountainHealthLight;
 
-	public Light healthLight1;
-	public Light healthLight2;
-	public Light healthLight3;
+	public GameObject healthLight1;
+	public GameObject healthLight2;
+	public GameObject healthLight3;
 
 
 	public bool alive;
@@ -52,14 +51,13 @@ public class MountainHealth : MonoBehaviour {
 		if (alive) {
 			damaged = true;
 			currentHealth += amount;
-			mountainHealthLight.intensity = mountainHealthLight.intensity + 5;
 
 			if (currentHealth == 1) {
-				healthLight1.enabled = true;
+				healthLight1.SetActive(true);
 			} else if (currentHealth == 2) {
-				healthLight2.enabled = true;
+				healthLight2.SetActive(true);
 			} else if (currentHealth == 3) {
-				healthLight3.enabled = true;
+				healthLight3.SetActive(true);
 				//TODO add Firework
 			}
 

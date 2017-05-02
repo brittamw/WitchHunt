@@ -23,7 +23,7 @@ public class Raven : Enemy {
 			enemey.constraints = RigidbodyConstraints.None;
 			deadEffect.Emit(1);
 			playerHealth.Score (10);
-			Destroy (gameObject, 2f);
+			Destroy (gameObject, 1f);
 		} else {
 			if (audioSource != null) {
 				audioSource.clip = wrongActionAudio;
